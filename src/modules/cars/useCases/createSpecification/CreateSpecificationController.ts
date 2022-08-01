@@ -4,14 +4,14 @@ import { container } from "tsyringe";
 import { CreateSpecificationUseCase } from "./CreateSpecificationUseCase";
 
 class CreateSpecificationController {
-  handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const createSpecificationUseCase = container.resolve(
       CreateSpecificationUseCase
     );
 
     const { name, description } = request.body;
 
-    createSpecificationUseCase.execute({ name, description });
+    await createSpecificationUseCase.execute({ name, description });
 
     return response.sendStatus(201);
   }
