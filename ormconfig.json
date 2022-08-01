@@ -4,5 +4,10 @@
   "host": "localhost",
   "username": "user",
   "password": "password",
-  "database": "rentxdb"
+  "database": "rentxdb",
+  "migrations": ["./src/database/migrations/*.ts"],
+  "entities": ["./src/modules/**/entities/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
+  }
 }
