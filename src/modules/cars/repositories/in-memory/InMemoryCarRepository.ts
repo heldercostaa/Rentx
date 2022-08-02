@@ -26,6 +26,8 @@ class InMemoryCarRepository implements ICarsRepository {
     car.category_id = categoryId;
 
     this.cars.push(car);
+
+    return car;
   }
 
   async findByLicensePlate(licensePlate: string) {

@@ -29,7 +29,7 @@ class CreateCarUseCase {
       throw new AppError("License plate already registered!");
     }
 
-    await this.carRepository.create({
+    const car = await this.carRepository.create({
       name,
       description,
       dailyRate,
@@ -38,6 +38,8 @@ class CreateCarUseCase {
       brand,
       categoryId,
     });
+
+    return car;
   }
 }
 
