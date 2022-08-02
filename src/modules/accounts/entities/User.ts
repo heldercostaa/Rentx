@@ -10,9 +10,6 @@ class User {
   name: string;
 
   @Column({ unique: true })
-  username: string;
-
-  @Column()
   email: string;
 
   @Column()
