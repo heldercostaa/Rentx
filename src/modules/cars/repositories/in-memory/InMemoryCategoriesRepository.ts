@@ -5,7 +5,7 @@ import {
 } from "../ICategoriesRepository";
 
 class InMemoryCategoriesRepository implements ICategoriesRepository {
-  categories: Category[] = [];
+  private categories: Category[] = [];
 
   async create({ name, description }: ICreateCategoryDTO) {
     const category = new Category();
