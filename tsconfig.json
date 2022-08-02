@@ -15,6 +15,9 @@
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
     "skipLibCheck": true
   }
 }
