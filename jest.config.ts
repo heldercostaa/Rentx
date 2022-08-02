@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { pathsToModuleNameMapper } from "ts-jest";
 
 import { compilerOptions } from "./tsconfig.json";
