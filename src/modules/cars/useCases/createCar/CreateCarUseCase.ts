@@ -1,4 +1,5 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
   name: string;
@@ -22,6 +23,12 @@ class CreateCarUseCase {
     brand,
     categoryId,
   }: IRequest) {
+    const carExists = await this.carRepository.findByLicensePlate(licensePlate);
+
+    if (carExists) {
+      throw new AppError("License plate already registered!");
+    }
+
     await this.carRepository.create({
       name,
       description,
