@@ -27,6 +27,10 @@ class InMemoryCarRepository implements ICarsRepository {
 
     this.cars.push(car);
   }
+
+  async findByLicensePlate(licensePlate: string) {
+    return this.cars.find((car) => car.license_plate === licensePlate);
+  }
 }
 
 export { InMemoryCarRepository };
