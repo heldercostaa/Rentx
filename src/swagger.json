@@ -9,7 +9,7 @@
     }
   },
   "paths": {
-    "/categories": {
+    "/category": {
       "post": {
         "tags": ["Category"],
         "description": "Create a new category",
@@ -72,7 +72,7 @@
         }
       }
     },
-    "/categories/import": {
+    "/category/import": {
       "post": {
         "tags": ["Category"],
         "summary": "Upload new categories",

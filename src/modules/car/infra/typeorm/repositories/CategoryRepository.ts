@@ -3,11 +3,11 @@ import { getRepository, Repository } from "typeorm";
 import { Category } from "@modules/car/infra/typeorm/entities/Category";
 
 import {
-  ICategoriesRepository,
+  ICategoryRepository,
   ICreateCategoryDTO,
-} from "../../../repositories/ICategoriesRepository";
+} from "../../../repositories/ICategoryRepository";
 
-class CategoriesRepository implements ICategoriesRepository {
+class CategoryRepository implements ICategoryRepository {
   private repository: Repository<Category>;
 
   constructor() {
@@ -21,6 +21,8 @@ class CategoriesRepository implements ICategoriesRepository {
     });
 
     await this.repository.save(category);
+
+    return category;
   }
 
   async list() {
@@ -36,4 +38,4 @@ class CategoriesRepository implements ICategoriesRepository {
   }
 }
 
-export { CategoriesRepository };
+export { CategoryRepository };

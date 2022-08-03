@@ -1,22 +1,22 @@
 import { Category } from "@modules/car/infra/typeorm/entities/Category";
 
 import {
-  ICategoriesRepository,
+  ICategoryRepository,
   ICreateCategoryDTO,
-} from "../ICategoriesRepository";
+} from "../ICategoryRepository";
 
-class InMemoryCategoriesRepository implements ICategoriesRepository {
+class InMemoryCategoryRepository implements ICategoryRepository {
   private categories: Category[] = [];
 
   async create({ name, description }: ICreateCategoryDTO) {
     const category = new Category();
 
-    Object.assign(category, {
-      name,
-      description,
-    });
+    category.name = name;
+    category.description = description;
 
     this.categories.push(category);
+
+    return category;
   }
 
   async list() {
@@ -30,4 +30,4 @@ class InMemoryCategoriesRepository implements ICategoriesRepository {
   }
 }
 
-export { InMemoryCategoriesRepository };
+export { InMemoryCategoryRepository };

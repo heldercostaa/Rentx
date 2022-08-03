@@ -9,9 +9,9 @@ class CreateCategoryController {
 
     const { name, description } = request.body;
 
-    await createCategoryUseCase.execute({ name, description });
+    const category = await createCategoryUseCase.execute({ name, description });
 
-    return response.sendStatus(201);
+    return response.status(201).json(category);
   }
 }
 
