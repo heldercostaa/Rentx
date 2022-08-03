@@ -4,28 +4,28 @@ import { v4 as uuidV4 } from "uuid";
 @Entity("user")
 class User {
   @PrimaryColumn()
-  id?: string;
+  id!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column()
-  password: string;
+  password!: string;
 
-  @Column()
-  driver_license: string;
+  @Column({ name: "driver_license" })
+  driverLicense!: string;
 
-  @Column({ default: false })
-  isAdmin: boolean;
+  @Column({ name: "is_admin", default: false })
+  isAdmin!: boolean;
 
   @Column({ nullable: true })
-  avatar: string;
+  avatar?: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: "created_at" })
+  createdAt!: Date;
 
   constructor() {
     if (!this.id) {

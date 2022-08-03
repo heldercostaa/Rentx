@@ -1,20 +1,20 @@
-import { InMemoryUsersRepository } from "@modules/accounts/repositories/in-memory/InMemoryUsersRepository";
+import { InMemoryUserRepository } from "@modules/account/repositories/in-memory/InMemoryUserRepository";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
-let inMemoryUsersRepository: InMemoryUsersRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let createUserUseCase: CreateUserUseCase;
 
 describe("Authenticate User", () => {
   beforeEach(() => {
-    inMemoryUsersRepository = new InMemoryUsersRepository();
+    inMemoryUserRepository = new InMemoryUserRepository();
     authenticateUserUseCase = new AuthenticateUserUseCase(
-      inMemoryUsersRepository
+      inMemoryUserRepository
     );
-    createUserUseCase = new CreateUserUseCase(inMemoryUsersRepository);
+    createUserUseCase = new CreateUserUseCase(inMemoryUserRepository);
   });
 
   it("should be able to authenticate an user", async () => {
@@ -22,7 +22,7 @@ describe("Authenticate User", () => {
       name: "John Doe",
       email: "johndoe@mail.com",
       password: "abc123",
-      driver_license: "99999",
+      driverLicense: "99999",
     };
 
     await createUserUseCase.execute(user);
@@ -50,7 +50,7 @@ describe("Authenticate User", () => {
         name: "John Doe",
         email: "johndoe@mail.com",
         password: "abc123",
-        driver_license: "99999",
+        driverLicense: "99999",
       };
 
       await createUserUseCase.execute(user);

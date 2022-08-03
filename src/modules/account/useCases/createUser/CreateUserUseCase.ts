@@ -1,18 +1,18 @@
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
-import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
-import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { ICreateUserDTO } from "@modules/account/dtos/ICreateUserDTO";
+import { IUserRepository } from "@modules/account/repositories/IUserRepository";
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()
 class CreateUserUseCase {
   constructor(
-    @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    @inject("UserRepository")
+    private userRepository: IUserRepository
   ) {}
 
-  async execute({ name, email, password, driver_license }: ICreateUserDTO) {
+  async execute({ name, email, password, driverLicense }: ICreateUserDTO) {
     const userExists = await this.userRepository.findByEmail(email);
 
     if (userExists) {
@@ -25,7 +25,7 @@ class CreateUserUseCase {
       name,
       email,
       password: passwordHash,
-      driver_license,
+      driverLicense,
     });
   }
 }

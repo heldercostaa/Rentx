@@ -4,13 +4,13 @@ import { authenticateRoutes } from "./authenticate.routes";
 import { carRoutes } from "./car.routes";
 import { categoriesRoutes } from "./categories.routes";
 import { specificationsRoutes } from "./specifications.routes";
-import { usersRoutes } from "./users.routes";
+import { userRoutes } from "./user.routes";
 
 const router = Router();
 
 router.use("/categories", categoriesRoutes);
 router.use("/specifications", specificationsRoutes);
-router.use("/users", usersRoutes);
+router.use("/user", userRoutes);
 router.use("/car", carRoutes);
 router.use(authenticateRoutes);
 
