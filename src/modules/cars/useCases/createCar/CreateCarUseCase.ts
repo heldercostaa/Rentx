@@ -1,3 +1,5 @@
+import { inject, injectable } from "tsyringe";
+
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { AppError } from "@shared/errors/AppError";
 
@@ -11,8 +13,11 @@ interface IRequest {
   categoryId: string;
 }
 
+@injectable()
 class CreateCarUseCase {
-  constructor(private carRepository: ICarsRepository) {}
+  constructor(
+    @inject("CarRepository") private carRepository: ICarsRepository
+  ) {}
 
   async execute({
     name,
