@@ -1,11 +1,11 @@
 import { getRepository, Repository } from "typeorm";
 
-import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
-import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { ICreateCarDTO } from "@modules/car/dtos/ICreateCarDTO";
+import { ICarRepository } from "@modules/car/repositories/ICarRepository";
 
 import { Car } from "../entities/Car";
 
-class CarRepository implements ICarsRepository {
+class CarRepository implements ICarRepository {
   private repository: Repository<Car>;
 
   constructor() {
@@ -24,11 +24,11 @@ class CarRepository implements ICarsRepository {
     const car = this.repository.create({
       name,
       description,
-      daily_rate: dailyRate,
-      license_plate: licensePlate,
+      dailyRate,
+      licensePlate,
       brand,
-      fine_amount: fineAmount,
-      category_id: categoryId,
+      fineAmount,
+      categoryId,
     });
 
     await this.repository.save(car);
@@ -37,7 +37,7 @@ class CarRepository implements ICarsRepository {
   }
 
   async findByLicensePlate(licensePlate: string) {
-    const car = this.repository.findOne({ license_plate: licensePlate });
+    const car = this.repository.findOne({ licensePlate });
 
     return car;
   }

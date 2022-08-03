@@ -21,35 +21,35 @@ class Car {
   @Column()
   description: string;
 
-  @Column()
-  daily_rate: number;
+  @Column({ name: "daily_rate" })
+  dailyRate: number;
 
   @Column({ default: true, type: "boolean" })
   available = true;
 
-  @Column()
-  license_plate: string;
+  @Column({ name: "license_plate" })
+  licensePlate: string;
 
-  @Column()
-  fine_amount: number;
+  @Column({ name: "fine_amount" })
+  fineAmount: number;
 
   @Column()
   brand: string;
 
-  @Column()
-  category_id: string;
+  @Column({ name: "category_id" })
+  categoryId: string;
 
   @ManyToOne(() => Category)
   @JoinColumn({ name: "category_id" })
   category: Category;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: "created_at" })
+  createdAt: Date;
 
   constructor() {
     if (!this.id) {
       this.id = uuidV4();
-      this.created_at = new Date();
+      this.createdAt = new Date();
     }
   }
 }

@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { ICarRepository } from "@modules/car/repositories/ICarRepository";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -15,9 +15,7 @@ interface IRequest {
 
 @injectable()
 class CreateCarUseCase {
-  constructor(
-    @inject("CarRepository") private carRepository: ICarsRepository
-  ) {}
+  constructor(@inject("CarRepository") private carRepository: ICarRepository) {}
 
   async execute({
     name,
