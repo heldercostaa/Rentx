@@ -13,6 +13,7 @@ class UserRepository implements IUserRepository {
   }
 
   async create({
+    id,
     avatar,
     name,
     email,
@@ -20,6 +21,7 @@ class UserRepository implements IUserRepository {
     driverLicense,
   }: ICreateUserDTO) {
     const user = this.repository.create({
+      id,
       avatar,
       name,
       email,
