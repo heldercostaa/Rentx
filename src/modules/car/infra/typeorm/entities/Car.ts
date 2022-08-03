@@ -13,38 +13,38 @@ import { Category } from "./Category";
 @Entity("car")
 class Car {
   @PrimaryColumn()
-  id: string;
+  id!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @Column({ name: "daily_rate" })
-  dailyRate: number;
+  dailyRate!: number;
 
   @Column({ default: true, type: "boolean" })
   available = true;
 
   @Column({ name: "license_plate" })
-  licensePlate: string;
+  licensePlate!: string;
 
   @Column({ name: "fine_amount" })
-  fineAmount: number;
+  fineAmount!: number;
 
   @Column()
-  brand: string;
+  brand!: string;
 
   @Column({ name: "category_id" })
-  categoryId: string;
+  categoryId!: string;
 
   @ManyToOne(() => Category)
   @JoinColumn({ name: "category_id" })
-  category: Category;
+  category?: Category;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt: Date;
+  createdAt!: Date;
 
   constructor() {
     if (!this.id) {

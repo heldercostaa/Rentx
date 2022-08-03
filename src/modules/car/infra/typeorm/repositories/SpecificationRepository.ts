@@ -1,13 +1,10 @@
 import { getRepository, Repository } from "typeorm";
 
+import { ICreateSpecificationDTO } from "@modules/car/dtos/ICreateSpecificationDTO";
 import { Specification } from "@modules/car/infra/typeorm/entities/Specification";
+import { ISpecificationRepository } from "@modules/car/repositories/ISpecificationRepository";
 
-import {
-  ICreateSpecificationDTO,
-  ISpecificationsRepository,
-} from "../ISpecificationsRepository";
-
-class SpecificationsRepository implements ISpecificationsRepository {
+class SpecificationRepository implements ISpecificationRepository {
   private repository: Repository<Specification>;
 
   constructor() {
@@ -21,6 +18,8 @@ class SpecificationsRepository implements ISpecificationsRepository {
     });
 
     await this.repository.save(specification);
+
+    return specification;
   }
 
   async findByName(name: string) {
@@ -30,4 +29,4 @@ class SpecificationsRepository implements ISpecificationsRepository {
   }
 }
 
-export { SpecificationsRepository };
+export { SpecificationRepository };

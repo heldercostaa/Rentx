@@ -99,9 +99,9 @@
         }
       }
     },
-    "/specifications": {
+    "/specification": {
       "post": {
-        "tags": ["Specifications"],
+        "tags": ["Specification"],
         "summary": "Create a specification",
         "description": "Create a new specification",
         "requestBody": {
