@@ -1,4 +1,5 @@
 import { ICreateCarDTO } from "@modules/car/dtos/ICreateCarDTO";
+import { IFindAvailableDTO } from "@modules/car/dtos/IFindAvailableDTO";
 import { Car } from "@modules/car/infra/typeorm/entities/Car";
 
 import { ICarRepository } from "../ICarRepository";
@@ -32,6 +33,16 @@ class InMemoryCarRepository implements ICarRepository {
 
   async findByLicensePlate(licensePlate: string) {
     return this.cars.find((car) => car.licensePlate === licensePlate);
+  }
+
+  async findAvailable({ categoryId, brand, name }: IFindAvailableDTO) {
+    return this.cars.filter(
+      (car) =>
+        car.available ||
+        (brand && car.brand === brand) ||
+        (categoryId && car.categoryId === categoryId) ||
+        (name && car.name === name)
+    );
   }
 }
 
