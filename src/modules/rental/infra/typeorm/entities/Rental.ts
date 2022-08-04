@@ -1,6 +1,15 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
+import { User } from "@modules/account/infra/typeorm/entities/User";
 import { Car } from "@modules/car/infra/typeorm/entities/Car";
 
 @Entity("rental")
@@ -18,22 +27,26 @@ class Rental {
   @Column({ name: "user_id" })
   userId!: string;
 
-  @Column({ name: "start_date" })
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "user_id" })
+  user?: User;
+
+  @Column({ name: "start_date", default: () => "now()" })
   startDate!: Date;
 
-  @Column({ name: "end_date" })
-  endDate!: Date;
+  @Column({ name: "end_date", nullable: true })
+  endDate?: Date;
 
   @Column({ name: "expected_return_date" })
   expectedReturnDate!: Date;
 
-  @Column()
-  total!: number;
+  @Column({ nullable: true })
+  total?: number;
 
-  @Column({ name: "created_at" })
+  @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
-  @Column({ name: "updated_at" })
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;
 
   constructor() {
