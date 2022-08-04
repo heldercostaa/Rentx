@@ -8,6 +8,7 @@ class InMemoryCarRepository implements ICarRepository {
   private cars: Car[] = [];
 
   async create({
+    id,
     name,
     description,
     dailyRate,
@@ -15,9 +16,11 @@ class InMemoryCarRepository implements ICarRepository {
     fineAmount,
     brand,
     categoryId,
+    specifications,
   }: ICreateCarDTO) {
     const car = new Car();
 
+    if (id) car.id = id;
     car.name = name;
     car.description = description;
     car.dailyRate = dailyRate;
@@ -25,6 +28,7 @@ class InMemoryCarRepository implements ICarRepository {
     car.fineAmount = fineAmount;
     car.brand = brand;
     car.categoryId = categoryId;
+    if (specifications) car.specifications = specifications;
 
     this.cars.push(car);
 
@@ -43,6 +47,10 @@ class InMemoryCarRepository implements ICarRepository {
         (categoryId && car.categoryId === categoryId) ||
         (name && car.name === name)
     );
+  }
+
+  async findById(id: string) {
+    return this.cars.find((car) => car.id === id);
   }
 }
 
