@@ -30,29 +30,7 @@ describe("Create Category Controller", () => {
     await connection.close();
   });
 
-  it("should be able to create a new category", async () => {
-    const tokenResponse = await request(app).post("/sessions").send({
-      email: "admin@mail.com",
-      password: "87654321",
-    });
-
-    const { token } = tokenResponse.body;
-
-    const response = await request(app)
-      .post("/category")
-      .send({
-        name: "Sports Car",
-        description:
-          "Sports cars are two-seater convertibles that allow for open-air driving and have a sporty appearance.",
-      })
-      .set({
-        Authorization: `Bearer ${token}`,
-      });
-
-    expect(response.status).toBe(201);
-  });
-
-  it("should not be able to create a new category with existing name", async () => {
+  it("should be able to list all categories", async () => {
     const tokenResponse = await request(app).post("/sessions").send({
       email: "admin@mail.com",
       password: "87654321",
@@ -71,17 +49,11 @@ describe("Create Category Controller", () => {
         Authorization: `Bearer ${token}`,
       });
 
-    const response = await request(app)
-      .post("/category")
-      .send({
-        name: "Sports Car",
-        description:
-          "Sports cars are two-seater convertibles that allow for open-air driving and have a sporty appearance.",
-      })
-      .set({
-        Authorization: `Bearer ${token}`,
-      });
+    const response = await request(app).get("/category").send();
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0]).toHaveProperty("id");
+    expect(response.body[0].name).toEqual("Sports Car");
   });
 });
