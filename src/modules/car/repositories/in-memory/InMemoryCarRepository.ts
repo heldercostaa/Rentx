@@ -57,7 +57,9 @@ class InMemoryCarRepository implements ICarRepository {
   async updateAvailable({ id, available }: IUpdateAvailableDTO) {
     const carIdx = this.cars.findIndex((car) => car.id === id);
 
-    this.cars[carIdx].available = available;
+    if (carIdx >= 0) {
+      this.cars[carIdx].available = available;
+    }
   }
 }
 
