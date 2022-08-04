@@ -30,8 +30,8 @@ class CreateRentalUseCase {
     }
 
     const timeDifference = this.dateProvider.compareInHours(
-      expectedReturnDate,
-      new Date()
+      new Date(),
+      expectedReturnDate
     );
 
     if (timeDifference < MINIMUM_RENT_HOURS) {

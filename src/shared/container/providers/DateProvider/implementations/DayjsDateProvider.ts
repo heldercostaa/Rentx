@@ -10,7 +10,7 @@ class DayjsDateProvider implements IDateProvider {
     const startDateUTC = this.convertToUTC(startDate);
     const endDateUTC = this.convertToUTC(endDate);
 
-    return dayjs(startDateUTC).diff(endDateUTC, "hours");
+    return dayjs(endDateUTC).diff(startDateUTC, "hours");
   }
 
   convertToUTC(date: Date) {
