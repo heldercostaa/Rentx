@@ -1,10 +1,6 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-
 import { IRentalRepository } from "@modules/rental/repositories/IRentalRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
-
-dayjs.extend(utc);
 
 interface IRequest {
   userId: string;
@@ -15,7 +11,10 @@ interface IRequest {
 const MINIMUM_RENT_HOURS = 24;
 
 class CreateRentalUseCase {
-  constructor(private rentalRepository: IRentalRepository) {}
+  constructor(
+    private rentalRepository: IRentalRepository,
+    private dateProvider: IDateProvider
+  ) {}
 
   async execute({ userId, carId, expectedReturnDate }: IRequest) {
     const isCarRented = await this.rentalRepository.findOpenByCarId(carId);
@@ -30,19 +29,12 @@ class CreateRentalUseCase {
       throw new AppError("There is already a rental in progress for this user");
     }
 
-    const expectedReturnDateFormatted = dayjs(expectedReturnDate)
-      .utc()
-      .local()
-      .format();
-
-    const nowFormatted = dayjs().utc().local().format();
-
-    const compare = dayjs(expectedReturnDateFormatted).diff(
-      nowFormatted,
-      "hours"
+    const timeDifference = this.dateProvider.compareInHours(
+      expectedReturnDate,
+      new Date()
     );
 
-    if (compare < MINIMUM_RENT_HOURS) {
+    if (timeDifference < MINIMUM_RENT_HOURS) {
       throw new AppError("Rental time should be at least 24 hours");
     }
 
