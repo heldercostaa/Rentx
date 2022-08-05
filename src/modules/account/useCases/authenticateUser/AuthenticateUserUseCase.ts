@@ -2,7 +2,10 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
+import auth from "@config/auth";
 import { IUserRepository } from "@modules/account/repositories/IUserRepository";
+import { IUserTokenRepository } from "@modules/account/repositories/IUserTokenRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -14,11 +17,24 @@ interface IRequest {
 class AuthenticateUserUseCase {
   constructor(
     @inject("UserRepository")
-    private userRepository: IUserRepository
+    private userRepository: IUserRepository,
+
+    @inject("UserTokenRepository")
+    private userTokenRepository: IUserTokenRepository,
+
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute({ email, password }: IRequest) {
     const user = await this.userRepository.findByEmail(email);
+    const {
+      expiresIn,
+      tokenSecret,
+      refreshTokenSecret,
+      refreshTokenExpiresIn,
+      refreshTokenExpiresDays,
+    } = auth;
 
     if (!user) {
       throw new AppError("Incorrect email or password");
@@ -30,9 +46,24 @@ class AuthenticateUserUseCase {
       throw new AppError("Incorrect email or password");
     }
 
-    const token = sign({}, "f34fa5ab9805c87d7a19050d14486e82", {
+    const token = sign({}, tokenSecret, {
       subject: user.id,
-      expiresIn: "1d",
+      expiresIn,
+    });
+
+    const refreshToken = sign({ email }, refreshTokenSecret, {
+      subject: user.id,
+      expiresIn: refreshTokenExpiresIn,
+    });
+
+    const refreshTokenExpireDate = this.dateProvider.addDays(
+      refreshTokenExpiresDays
+    );
+
+    await this.userTokenRepository.create({
+      userId: user.id,
+      expireDate: refreshTokenExpireDate,
+      refreshToken,
     });
 
     return {
@@ -41,6 +72,7 @@ class AuthenticateUserUseCase {
         email: user.email,
       },
       token,
+      refreshToken,
     };
   }
 }
