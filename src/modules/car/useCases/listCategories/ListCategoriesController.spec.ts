@@ -31,7 +31,7 @@ describe("Create Category Controller", () => {
   });
 
   it("should be able to list all categories", async () => {
-    const tokenResponse = await request(app).post("/sessions").send({
+    const tokenResponse = await request(app).post("/session").send({
       email: "admin@mail.com",
       password: "87654321",
     });

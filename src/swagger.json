@@ -78,6 +78,7 @@
         "tags": ["Category"],
         "summary": "Upload new categories",
         "description": "Upload new categories",
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -105,6 +106,7 @@
         "tags": ["Specification"],
         "summary": "Create a specification",
         "description": "Create a new specification",
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
@@ -124,7 +126,7 @@
         }
       }
     },
-    "/sessions": {
+    "/session": {
       "post": {
         "tags": ["Session"],
         "summary": "User Authentication",
@@ -155,7 +157,8 @@
           }
         }
       }
-    }
+    },
+    "/car": {}
   },
   "definitions": {
     "Specification": {
