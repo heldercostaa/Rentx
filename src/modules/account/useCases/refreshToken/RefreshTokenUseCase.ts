@@ -53,7 +53,7 @@ class RefreshTokenUseCase {
     await this.userTokenRepository.create({
       userId: sub,
       expireDate: refreshTokenExpireDate,
-      refreshToken,
+      refreshToken: newRefreshToken,
     });
 
     return newRefreshToken;
