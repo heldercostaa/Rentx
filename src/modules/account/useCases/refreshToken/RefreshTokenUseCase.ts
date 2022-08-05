@@ -35,7 +35,7 @@ class RefreshTokenUseCase {
         refreshToken,
       });
 
-    if (userToken) {
+    if (!userToken) {
       throw new AppError("Refresh Token does not exist");
     }
 
