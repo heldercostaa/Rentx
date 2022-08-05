@@ -18,17 +18,31 @@ class InMemoryRentalRepository implements IRentalRepository {
     );
   }
 
-  async create({ userId, carId, expectedReturnDate }: ICreateRentalDTO) {
+  async create({
+    id,
+    userId,
+    carId,
+    expectedReturnDate,
+    total,
+    endDate,
+  }: ICreateRentalDTO) {
     const rental = new Rental();
 
+    if (id) rental.id = id;
     rental.userId = userId;
     rental.carId = carId;
     rental.expectedReturnDate = expectedReturnDate;
     rental.startDate = new Date();
+    if (total) rental.total = total;
+    if (endDate) rental.endDate = endDate;
 
     this.rentals.push(rental);
 
     return rental;
+  }
+
+  async findById(id: string) {
+    return this.rentals.find((rental) => rental.id === id);
   }
 }
 
