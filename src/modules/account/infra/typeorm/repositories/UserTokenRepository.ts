@@ -1,6 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 
 import { ICreateUserTokenDTO } from "@modules/account/dtos/ICreateUserTokenDTO";
+import { IFindByUserIdAndRefreshTokenDTO } from "@modules/account/dtos/IFindByUserIdAndRefreshTokenDTO";
 import { IUserTokenRepository } from "@modules/account/repositories/IUserTokenRepository";
 
 import { UserToken } from "../entities/UserToken";
@@ -22,6 +23,19 @@ class UserTokenRepository implements IUserTokenRepository {
     await this.repository.save(userToken);
 
     return userToken;
+  }
+
+  async findByUserIdAndRefreshToken({
+    userId,
+    refreshToken,
+  }: IFindByUserIdAndRefreshTokenDTO) {
+    const userTokens = await this.repository.findOne({ userId, refreshToken });
+
+    return userTokens;
+  }
+
+  async deleteById(id: string) {
+    await this.repository.delete(id);
   }
 }
 
