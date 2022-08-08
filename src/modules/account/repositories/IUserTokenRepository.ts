@@ -15,6 +15,8 @@ interface IUserTokenRepository {
   }: IFindByUserIdAndRefreshTokenDTO): Promise<UserToken>;
 
   deleteById(id: string): Promise<void>;
+
+  findByRefreshToken(refreshToken: string): Promise<UserToken>;
 }
 
 export { IUserTokenRepository };
