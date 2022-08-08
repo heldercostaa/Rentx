@@ -36,7 +36,7 @@ describe("Create Category Controller", () => {
       password: "87654321",
     });
 
-    const { token } = tokenResponse.body;
+    const { refreshToken } = tokenResponse.body;
 
     const response = await request(app)
       .post("/category")
@@ -46,7 +46,7 @@ describe("Create Category Controller", () => {
           "Sports cars are two-seater convertibles that allow for open-air driving and have a sporty appearance.",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refreshToken}`,
       });
 
     expect(response.status).toBe(201);
@@ -58,7 +58,7 @@ describe("Create Category Controller", () => {
       password: "87654321",
     });
 
-    const { token } = tokenResponse.body;
+    const { refreshToken } = tokenResponse.body;
 
     await request(app)
       .post("/category")
@@ -68,7 +68,7 @@ describe("Create Category Controller", () => {
           "Sports cars are two-seater convertibles that allow for open-air driving and have a sporty appearance.",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refreshToken}`,
       });
 
     const response = await request(app)
@@ -79,7 +79,7 @@ describe("Create Category Controller", () => {
           "Sports cars are two-seater convertibles that allow for open-air driving and have a sporty appearance.",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refreshToken}`,
       });
 
     expect(response.status).toBe(400);
