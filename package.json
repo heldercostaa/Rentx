@@ -11,6 +11,7 @@
     "seed:sample": "ts-node-dev -r tsconfig-paths/register src/shared/infra/typeorm/seeds/sample-data.ts"
   },
   "dependencies": {
+    "aws-sdk": "^2.1191.0",
     "bcrypt": "^5.0.1",
     "csv-parse": "^5.3.0",
     "dayjs": "^1.11.4",
