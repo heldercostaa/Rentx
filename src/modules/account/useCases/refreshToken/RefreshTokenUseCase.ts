@@ -29,17 +29,17 @@ class RefreshTokenUseCase {
 
     const userId = sub;
 
-    const userToken =
+    const userCurrentRefreshToken =
       await this.userTokenRepository.findByUserIdAndRefreshToken({
         userId,
         refreshToken,
       });
 
-    if (!userToken) {
-      throw new AppError("Refresh Token does not exist");
+    if (!userCurrentRefreshToken) {
+      throw new AppError("Invalid refresh token for user");
     }
 
-    await this.userTokenRepository.deleteById(userToken.id);
+    await this.userTokenRepository.deleteById(userCurrentRefreshToken.id);
 
     const newRefreshToken = sign({ email }, auth.refreshTokenSecret, {
       subject: sub,
@@ -56,7 +56,15 @@ class RefreshTokenUseCase {
       refreshToken: newRefreshToken,
     });
 
-    return newRefreshToken;
+    const newToken = sign({}, auth.tokenSecret, {
+      subject: userId,
+      expiresIn: auth.expiresIn,
+    });
+
+    return {
+      token: newToken,
+      refreshToken: newRefreshToken,
+    };
   }
 }
 
